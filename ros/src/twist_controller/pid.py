@@ -1,6 +1,6 @@
 
-MIN_NUM = float('-inf')
-MAX_NUM = float('inf')
+MIN_NUM = float('-1')
+MAX_NUM = float('1')
 
 
 class PID(object):
@@ -22,10 +22,17 @@ class PID(object):
 
         integral = self.int_val + error * sample_time;
         derivative = (error - self.last_error) / sample_time;
-
-        y = self.kp * error + self.ki * self.int_val + self.kd * derivative;
+	
+        #limit contribution of integrator  	
+        #self.int_val = max(-.1, min(self.int_val, .1))
+	integrator = self.ki * self.int_val
+        i = max(-.1, min(integrator, .1))
+	p = self.kp * error
+        y = p + i + self.kd * derivative;
         val = max(self.min, min(y, self.max))
-
+	
+	print p, i, 
+	
         if val > self.max:
             val = self.max
         elif val < self.min:
