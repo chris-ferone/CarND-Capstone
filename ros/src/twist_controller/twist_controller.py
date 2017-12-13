@@ -79,7 +79,6 @@ class Controller(object):
 
 
             self.last_velocity_error = velocity_error
-            #args = velocity_error
             self.log_data(log_handle, pid_throttle, feedforward_throttle, velocity_error, DT, decel_target, int(self.brakeLatch))
         else:
             throttle = 0
