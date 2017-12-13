@@ -87,7 +87,7 @@ class DBWNode(object):
 
                 # Log data for car control analysis
                 if self.log_to_csv:
-                    self.log_data(rospy.get_rostime(), self.twist_cmd.linear.x, self.twist_cmd.angular.z,
+                    self.log_data(rospy.get_rostime().to_sec(), self.twist_cmd.linear.x, self.twist_cmd.angular.z,
                                   self.current_velocity.linear.x, self.current_velocity.angular.z, int(self.dbw_enabled), throttle, brake, steering)
 
                 # Ensure dbw is enabled (not manual mode)
