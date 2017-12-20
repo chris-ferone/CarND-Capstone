@@ -5,7 +5,7 @@
 
 # Objective
 
-The objective of the project is to build a self driving car by controlling its throttle, steering and brakes to navigate on a map. The car is equiped with numerous sensors (Lidar, Radar, cameras, etc) that we can access to make it aware of its environment. It is expected to follow lanes, detect traffic lights and objects and plan a trajectory based on pre-set waypoints. It should be able to classify “Red”, “Green”, and “Yellow” lights and stop/start/slow down based on the traffic signal.
+The objective of the project is to build a self driving car by controlling its throttle, steering and brakes to navigate on a map. The car is equipped with numerous sensors (Lidar, Radar, cameras, etc) that we can access to make it aware of its environment. It is expected to follow lanes, detect traffic lights and objects and plan a trajectory based on pre-set waypoints. It should be able to classify “Red”, “Green”, and “Yellow” lights and stop/start/slow down based on the traffic signal.
 
 Before running our program on Carla (Udacity's self driving car) we developed our code to work in a simulator. Even though simplified, it was able to let us quickly test our code without having access to the actual car and sensors. The simulator works in a very similar way as CARLA with communication performed through ROS nodes and topics. After having optimized our code and our controls in the simulator, we calibrated our commands based on Carla's specifications to see how it would perform on a real car.
 
@@ -38,17 +38,17 @@ We developed a deep neural net to detect upcoming traffic lights as well as thei
 
 It is interesting to note that we detect the traffic light as well as identify its color within the same neural network. We don't need to first identify its position through a bounded box. Our only concern is actually only to know that there is a red or orange traffic light somewhere ahead of us, and that we need to slow down and come to a full stop at its position, already located in our map.
 
-One of the main advantages of MobileNets is that they are efficient while using much less memory and computing power than traditional neural networks, having been developed mainly for embedded devices. It was particularly adapted for our application in which we need to process pictures very quickly. The architecture of MobileNet has been reproduced herebelow:
+One of the main advantages of MobileNets is that they are efficient while using much less memory and computing power than traditional neural networks, having been developed mainly for embedded devices. It was particularly adapted for our application in which we need to process pictures very quickly. The architecture of MobileNet has been reproduced here below:
 
 ![alt text](imgs/Network.png)
 
 We cannot develop an efficient neural network without a good dataset. We developed two separate classifiers for the simulation and for the actual site. They were based on recorded videos from the cameras, extracted and classified manually. We then augmented our dataset with random cropping, scaling, adjustment of brightness.
 
-Our classifer for simulation images was able to reach a test accuracy of 93.3% (on 744 test samples).
+Our classifier for simulation images was able to reach a test accuracy of 93.3% (on 744 test samples).
 
 ![alt text](imgs/TF%20training%20-%20simulation.png)
 
-Our classifer for site images was able to reach a test accuracy of 87.5% (on 640 test samples).
+Our classifier for site images was able to reach a test accuracy of 87.5% (on 640 test samples).
 
 ![alt text](imgs/TF%20training%20-%20site.png)
 
@@ -80,7 +80,7 @@ Braking command (in yellow) after low pass filter is much smoother:
 
 ![alt text](imgs/setting%20PID%20for%20brake_smooth.png)
 
-Due to differences of control in the simulator and on the real car we adjust our control commands proportionnally based on the intended use.
+Due to differences of control in the simulator and on the real car we adjust our control commands proportionally based on the intended use.
 
 # Operation
 
@@ -90,21 +90,29 @@ Different roslaunch files can be used with our system to adapt quickly to differ
 
 * site mode, which can directly be used on Carla.
 
+A few parameters have been set in the launch files, in particular the ones associated with the control node (dbw_node) following John Chen's suggestion on slack. This let the testers modify and adjust easily those values, in particular the ones associated to the throttle and brake, which were set based on test data.
+
+# Results
+
+## Implementation on the simulator
+
 We tested our program in the simulator until we reached satisfying results.
 
 ![alt text](imgs/simulator.png)
 
-The car was following its lane with great accuracy, stopping at red lights, and acted smoothly, both in terms of steering as well as acceleration and braking.
+The car was tracking its lane with great accuracy, stopping at red lights, and acted smoothly, both in terms of steering as well as acceleration and braking.
 
 ![alt text](imgs/Car_performance.png)
 
 We decided to proceed with implementing our code on a real car.
 
-# Results
+## Implementation on a real car
 
-Coming soon!!!
+The code has been submitted for running on Carla (Udacity's self-driving car)!
 
-# Original Readme from [Udacity](https://github.com/udacity/CarND-Capstone)
+Results coming soon!!!
+
+# [Original Readme from Udacity](https://github.com/udacity/CarND-Capstone)
 
 This is the project repo for the final project of the Udacity Self-Driving Car Nanodegree: Programming a Real Self-Driving Car. For more information about the project, see the project introduction [here.](https://classroom.udacity.com/nanodegrees/nd013/parts/6047fe34-d93c-4f50-8336-b70ef10cb4b2/modules/e1a23b06-329a-4684-a717-ad476f0d8dff/lessons/462c933d-9f24-42d3-8bdc-a08a5fc866e4/concepts/5ab4b122-83e6-436d-850f-9f4d26627fd9)
 
